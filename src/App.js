@@ -1,15 +1,28 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom"
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import './App.css';
 import { Home } from './home';
-import { Products } from './products';
+import { Shop } from './shop';
 import { ContactUs } from './contact-us';
+import { CssBaseline } from '@material-ui/core';
+
+const theme = createMuiTheme({
+	palette: {
+		background: {
+			paper: "#f7f0eb"
+		}
+	}
+})
 
 function App() {
+	console.log(theme)
 	return (
-		<Router>
-			<div>
-				{/* <nav>
+		<MuiThemeProvider theme={theme}>
+			<CssBaseline />
+			<Router>
+				<div>
+					{/* <nav>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -18,11 +31,12 @@ function App() {
           </li>
         </nav> */}
 
-				<Route path="/" exact component={Home} />
-				<Route path="/products/" component={Products} />
-				<Route path="/contact-us/" component={ContactUs} />
-			</div>
-		</Router>
+					<Route path="/" exact component={Home} />
+					<Route path="/shop/" component={Shop} />
+					<Route path="/contact-us/" component={ContactUs} />
+				</div>
+			</Router>
+		</MuiThemeProvider>
 	);
 }
 

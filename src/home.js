@@ -88,7 +88,7 @@ export function Home() {
 				</Container>
 				<Container maxWidth="sm">
 					<Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-					Paper Plane
+					Little Limegrass
 					</Typography>
 					<Typography variant="h5" align="center" color="textSecondary" paragraph>
 						Some short motto or phrase that captures the audience. Start shopping now!

@@ -76,7 +76,7 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 //     return <h2>Products</h2>
 // } 
 
-export function Products() {
+export function Shop() {
 	const classes = useStyles();
 
 	return (
@@ -96,14 +96,12 @@ export function Products() {
 				<div className={classes.heroContent}>
 					<Container maxWidth="sm">
 						<Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-							Products
+							Shop
 						</Typography>
 						<Typography variant="h5" align="center" color="textSecondary" paragraph>
-							Something short and leading about the collection below—its contents, the creator, etc.
-              Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-              entirely.
+							Insert small description if necessary.
 						</Typography>
-						<div className={classes.heroButtons}>
+						{/* <div className={classes.heroButtons}>
 							<Grid container spacing={2} justify="center">
 								<Grid item>
 									<Button variant="contained" color="primary">
@@ -116,10 +114,30 @@ export function Products() {
 									</Button>
 								</Grid>
 							</Grid>
-						</div>
+						</div> */}
 					</Container>
 				</div>
+				<div className={classes.heroButtons}>
+					<Grid container spacing={2} justify="center">
+						<Grid item>
+							<Button variant="contained" color="primary">
+								All
+							</Button>
+						</Grid>
+						<Grid item>
+							<Button variant="outlined" color="primary">
+								Price: Low to High
+							</Button>
+						</Grid>
+						<Grid item>
+							<Button variant="outlined" color="primary">
+								Price: High to Low
+							</Button>
+						</Grid>
+					</Grid>
+				</div>
 				<Container className={classes.cardGrid} maxWidth="md">
+
 					{/* End hero unit */}
 					<Grid container spacing={4}>
 						{cards.map(card => (
