@@ -22,15 +22,6 @@ function App() {
 			<CssBaseline />
 			<Router>
 				<div>
-					{/* <nav>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/products/">Products</Link>
-          </li>
-        </nav> */}
-
 					<Route path="/" exact component={Home} />
 					<Route path="/shop/" component={Shop} />
 					<Route path="/contact-us/" component={ContactUs} />
