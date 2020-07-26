@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
@@ -15,6 +15,9 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 
 import { Appbar } from "./appbar";
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { CircularProgress } from '@material-ui/core';
 
 function Copyright() {
 	return (
@@ -67,32 +70,52 @@ const useStyles = makeStyles(theme => ({
 		height: 450, //minus some height for the container margin
 		objectFit: 'cover',
 		objectPosition: '20% 10px'
+	},
+	loading: {
+		marginTop: '2%',
+		marginLeft: '50%',
+		marginRight: '50%'
 	}
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-// export function Products() {
-//     return <h2>Products</h2>
-// } 
-
 export function Shop() {
 	const classes = useStyles();
+	const [response, setResponse] = useState(null);
+
+	useEffect(() => {
+		async function fetchProducts() {
+			const accessToken = Cookies.get('accessToken');
+			const resp = await axios({
+				url: 'https://realm.mongodb.com/api/client/v2.0/app/littlelimegrass-kczsz/graphql',
+				method: 'post',
+				headers: {
+					'Authorization': `Bearer ${accessToken}`
+				},
+				data: {
+					query: `
+						query {
+							products {
+								_id
+								imageUrl
+								price
+								productId
+								stock
+							}
+						}
+					`
+				}
+			});
+			setResponse(resp);
+		}
+
+		fetchProducts();
+	}, [])
 
 	return (
 		<React.Fragment>
 			{/* <CssBaseline /> */}
 			<Appbar />
-			{/* <AppBar position="relative">
-        <Toolbar>
-          <CameraIcon className={classes.icon} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Album layout
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
 			<main>
-				{/* Hero unit */}
 				<div className={classes.heroContent}>
 					<Container maxWidth="sm">
 						<Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
@@ -101,20 +124,6 @@ export function Shop() {
 						<Typography variant="h5" align="center" color="textSecondary" paragraph>
 							Insert small description if necessary.
 						</Typography>
-						{/* <div className={classes.heroButtons}>
-							<Grid container spacing={2} justify="center">
-								<Grid item>
-									<Button variant="contained" color="primary">
-										Main call to action
-									</Button>
-								</Grid>
-								<Grid item>
-									<Button variant="outlined" color="primary">
-										Secondary action
-									</Button>
-								</Grid>
-							</Grid>
-						</div> */}
 					</Container>
 				</div>
 				<div className={classes.heroButtons}>
@@ -136,16 +145,15 @@ export function Shop() {
 						</Grid>
 					</Grid>
 				</div>
+				{response ? 
 				<Container className={classes.cardGrid} maxWidth="md">
-
-					{/* End hero unit */}
 					<Grid container spacing={4}>
-						{cards.map(card => (
-							<Grid item key={card} xs={12} sm={6} md={4}>
+						{response.data.data.products.map(card => (
+							<Grid item key={card._id} xs={12} sm={6} md={4}>
 								<Card className={classes.card}>
 									<CardMedia
 										className={classes.cardMedia}
-										image="https://source.unsplash.com/random"
+										image={card.imageUrl}
 										title="Image title"
 									/>
 									<CardContent className={classes.cardContent}>
@@ -168,7 +176,8 @@ export function Shop() {
 							</Grid>
 						))}
 					</Grid>
-				</Container>
+				</Container> :
+				<CircularProgress color="secondary" className={classes.loading}/>}
 			</main>
 			{/* Footer */}
 			<footer className={classes.footer}>
