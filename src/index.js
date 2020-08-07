@@ -7,6 +7,7 @@ import { user } from './stitchUser';
 
 //TODO: Bearer token expired in 30mins
 window.onload = user;
+// console.log(user)
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

@@ -18,6 +18,7 @@ import { Appbar } from "./appbar";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { CircularProgress } from '@material-ui/core';
+import { user } from './stitchUser';
 
 function Copyright() {
 	return (
@@ -51,12 +52,16 @@ const useStyles = makeStyles(theme => ({
 		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
+		boxShadow: 'none',
+		backgroundColor: '#fafafa',
+		borderRadius: 0
 	},
 	cardMedia: {
 		paddingTop: '56.25%', // 16:9
 	},
 	cardContent: {
 		flexGrow: 1,
+		paddingLeft: 0
 	},
 	footer: {
 		backgroundColor: theme.palette.background.paper,
@@ -84,7 +89,7 @@ export function Shop() {
 
 	useEffect(() => {
 		async function fetchProducts() {
-			const accessToken = Cookies.get('accessToken');
+			const accessToken = await user();
 			const resp = await axios({
 				url: 'https://realm.mongodb.com/api/client/v2.0/app/littlelimegrass-kczsz/graphql',
 				method: 'post',
@@ -99,7 +104,10 @@ export function Shop() {
 								imageUrl
 								price
 								productId
+								description
 								stock
+								material
+								color
 							}
 						}
 					`
@@ -149,7 +157,7 @@ export function Shop() {
 				<Container className={classes.cardGrid} maxWidth="md">
 					<Grid container spacing={4}>
 						{response.data.data.products.map(card => (
-							<Grid item key={card._id} xs={12} sm={6} md={4}>
+							<Grid item key={card._id} xs={12} sm={6} md={6}>
 								<Card className={classes.card}>
 									<CardMedia
 										className={classes.cardMedia}
@@ -157,21 +165,13 @@ export function Shop() {
 										title="Image title"
 									/>
 									<CardContent className={classes.cardContent}>
-										<Typography gutterBottom variant="h5" component="h2">
-											Heading
-										</Typography>
 										<Typography>
-											This is a media card. You can use this section to describe the content.
+											{card.description}
+										</Typography>
+										<Typography gutterBottom variant="h5" component="h2">
+											{`AU$${Number(card.price).toFixed(2)}`}
 										</Typography>
 									</CardContent>
-									<CardActions>
-										<Button size="small" color="primary">
-											View
-										</Button>
-										<Button size="small" color="primary">
-											Edit
-										</Button>
-									</CardActions>
 								</Card>
 							</Grid>
 						))}
