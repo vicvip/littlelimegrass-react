@@ -20,41 +20,9 @@ const theme = createMuiTheme({
 })
 
 function App() {
-	// const [response, setResponse] = useState(null);
-
-	// useEffect(() => {
-	// 	async function fetchProducts() {
-	// 		const accessToken  = await user();
-	// 		const resp = await Axios({
-	// 			url: 'https://realm.mongodb.com/api/client/v2.0/app/littlelimegrass-kczsz/graphql',
-	// 			method: 'post',
-	// 			headers: {
-	// 				'Authorization': `Bearer ${accessToken}`
-	// 			},
-	// 			data: {
-	// 				query: `
-	// 					query {
-	// 						products {
-	// 							productId
-	// 						}
-	// 					}
-	// 				`
-	// 			}
-	// 		});
-	// 		setResponse(resp);
-	// 	}
-
-	// 	fetchProducts();
-	// }, [])
-
-	// const allProductId = response ? response.data.data.products.map(item => {
-	// 	return item.productId
-	// }) : [];
-
-	// 	const items = [{ id: 1 }, { id: 2 }, { id: 3 }];
-	// 	items.map(item =>
-	//     	<Route exact path=`/product/${item.id}` component={Product} />
-	// )
+	useEffect(() => { 
+		document.body.style.backgroundColor = theme.palette.background.paper 
+	}, [])
 
 	return (
 		<MuiThemeProvider theme={theme}>
@@ -62,13 +30,9 @@ function App() {
 			<Router>
 				<div>
 					<Route path="/" exact component={Home} />
-					<Route path="/shop/" component={Shop} />
+					<Route path="/shop/" exact component={Shop} />
 					<Route path="/contact-us/" component={ContactUs} />
-					<Route path="/test/scrunchie-linen-skyblue/" component={Product} />
-					{/* {allProductId.forEach(productId => {
-						console.log(productId)
-						return <Route path={`/${productId}/`} component={Product} />
-					})} */}
+					<Route path="/shop/:product/" component={Product} />
 				</div>
 			</Router>
 		</MuiThemeProvider>

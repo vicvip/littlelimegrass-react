@@ -12,12 +12,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+import { Link } from "react-router-dom"
 
 import { Appbar } from "./appbar";
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, CardActionArea } from '@material-ui/core';
 import { user } from './stitchUser';
 
 function Copyright() {
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		flexDirection: 'column',
 		boxShadow: 'none',
-		backgroundColor: '#fafafa',
+		backgroundColor: theme.palette.background.paper,
 		borderRadius: 0
 	},
 	cardMedia: {
@@ -80,6 +80,10 @@ const useStyles = makeStyles(theme => ({
 		marginTop: '2%',
 		marginLeft: '50%',
 		marginRight: '50%'
+	},
+	link: {
+		textDecoration: 'none',
+		color: 'black'
 	}
 }));
 
@@ -154,24 +158,35 @@ export function Shop() {
 					</Grid>
 				</div>
 				{response ? 
-				<Container className={classes.cardGrid} maxWidth="md">
-					<Grid container spacing={4}>
+				<Container className={classes.cardGrid} maxWidth="xl">
+					<Grid
+						container
+						direction="row"
+						justify="flex-start"
+						alignItems="flex-start"
+						spacing={3}
+					>
 						{response.data.data.products.map(card => (
-							<Grid item key={card._id} xs={12} sm={6} md={6}>
+							<Grid item key={card.productId} xs={12} md={4}>
 								<Card className={classes.card}>
-									<CardMedia
-										className={classes.cardMedia}
-										image={card.imageUrl}
-										title="Image title"
-									/>
-									<CardContent className={classes.cardContent}>
-										<Typography>
-											{card.description}
-										</Typography>
-										<Typography gutterBottom variant="h5" component="h2">
-											{`AU$${Number(card.price).toFixed(2)}`}
-										</Typography>
-									</CardContent>
+									<CardActionArea>
+										<Link to={`/shop/${card.productId}`} className={classes.link}>
+										
+											<CardMedia
+												className={classes.cardMedia}
+												image={card.imageUrl}
+												title={card.description}
+											/>
+											<CardContent className={classes.cardContent}>
+												<Typography>
+													{card.description}
+												</Typography>
+												<Typography gutterBottom variant="h5" component="h2">
+													{`AU$${Number(card.price).toFixed(2)}`}
+												</Typography>
+											</CardContent>
+										</Link>
+									</CardActionArea>
 								</Card>
 							</Grid>
 						))}
