@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+/* To be used by import { Slide } from "react-slideshow-image" to center items */
+.images-wrap {
+	display: flex;
+    align-items: center;
+}

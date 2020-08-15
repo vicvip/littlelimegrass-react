@@ -20,19 +20,6 @@ import Cookies from 'js-cookie';
 import { CircularProgress, CardActionArea } from '@material-ui/core';
 import { user } from './stitchUser';
 
-function Copyright() {
-	return (
-		<Typography variant="body2" color="textSecondary" align="center">
-			{'Copyright © '}
-			<Link color="inherit" href="https://material-ui.com/">
-				Your Website
-			</Link>{' '}
-			{new Date().getFullYear()}
-			{'.'}
-		</Typography>
-	);
-}
-
 const useStyles = makeStyles(theme => ({
 	icon: {
 		marginRight: theme.spacing(2),
@@ -141,8 +128,13 @@ export function Shop() {
 				<div className={classes.heroButtons}>
 					<Grid container spacing={2} justify="center">
 						<Grid item>
+							<Typography variant="h5" align="center" color="textSecondary" paragraph>
+								Sort by 
+							</Typography>
+						</Grid>
+						<Grid item>
 							<Button variant="contained" color="primary">
-								All
+								Everything
 							</Button>
 						</Grid>
 						<Grid item>
@@ -171,7 +163,6 @@ export function Shop() {
 								<Card className={classes.card}>
 									<CardActionArea>
 										<Link to={`/shop/${card.productId}`} className={classes.link}>
-										
 											<CardMedia
 												className={classes.cardMedia}
 												image={card.imageUrl}
@@ -202,7 +193,6 @@ export function Shop() {
 				<Typography variant="subtitle1" align="center" color="textSecondary" component="p">
 					Something here to give the footer a purpose!
 				</Typography>
-				<Copyright />
 			</footer>
 			{/* End footer */}
 		</React.Fragment>
